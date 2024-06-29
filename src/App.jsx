@@ -9,11 +9,13 @@ import ProtectedRoute from './routes/ProtectedRoutes'
 import Dashboard from './pages/Dashboard'
 import Navbar from './components/Navbar'
 import OtpVerifyPage from './pages/auth/OtpVerify'
+// import { NavbarDefault } from './components/NavbarCheck'
 function App() {
 
   return (
     <>
     <ToastContainer />
+    {/* <NavbarDefault/> */}
     <Navbar/>
 
       <Routes>
