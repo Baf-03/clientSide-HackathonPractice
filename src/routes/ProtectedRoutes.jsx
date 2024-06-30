@@ -11,7 +11,10 @@ const ProtectedRoute = () => {
   const {loading ,verified} = useSelector((state) => state.userReducer);
 
  const pageNav =()=>{
+  
   if(!verified){
+    dispatch(setLoading(false));
+    
     navigate("/auth/login")
   }
  }
@@ -34,6 +37,22 @@ const validateToken = async (token) => {
             Authorization: `Bearer ${token}`,
           },
         });
+        console.log(resp)
+        console.log(localStorage.getItem("token"))
+        if(localStorage.getItem("token")){
+          console.log("mae andr hon 1")
+          if(resp?.data?.status===false && resp?.data?.email){
+          console.log("mae andr hon 1 2")
+
+            dispatch(updateEmail(decodedToken.email))
+            dispatch(setLoading(false));
+            dispatch(isVerified(true))
+            navigate("/auth/otp-verify")
+            return
+          }
+        }
+        
+        
         console.log("hello",resp)
         dispatch(setLoading(false));
         dispatch(isVerified(true))

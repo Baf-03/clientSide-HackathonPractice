@@ -26,11 +26,23 @@ const AuthRoute = () => {
       const token =localStorage.getItem("token");
       if(token){
         const verifyUser =async()=>{
-          await axios.get(`${apiUrl}/api/auth/verify`, {
+         const isverified= await axios.get(`${apiUrl}/api/auth/verify`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
+            
           });
+        console.log(isverified)
+        console.log("ahaha",isverified?.data?.status,isverified?.data?.email)
+        if(localStorage.getItem("token")){
+          console.log("mae andr hon auth")
+          if(isverified?.data?.status===false && isverified?.data?.email){
+            // navigate("/auth/otp-verify")
+            return
+          }
+          
+        }
+          
         }
         dispatch(setLoading(false));
         dispatch(isVerified(true));
