@@ -16,7 +16,7 @@ function App() {
     <>
     <ToastContainer />
     {/* <NavbarDefault/> */}
-    <Navbar/>
+    {/* <Navbar/> */}
 
       <Routes>
 
@@ -25,6 +25,7 @@ function App() {
               <Route path='/auth/register' element={<Register/>}/>
 
           </Route>
+
           <Route element={<ProtectedRoute/>}>
             <Route index element={<Dashboard/>}/>
             <Route path='/auth/otp-verify' element={<OtpVerifyPage/>}/>

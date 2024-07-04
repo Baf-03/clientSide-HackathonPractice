@@ -16,6 +16,7 @@ const OtpVerifyPage = () => {
   useEffect(()=>{
     const checkVerify = async()=>{
         dispatch(setLoading(false));
+        console.log("verify api hit fot redirecting purpose please understand")
         const resp= await axios.get(`${apiUrl}/api/auth/verify`, {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -30,7 +31,7 @@ const OtpVerifyPage = () => {
           }
     }
     checkVerify()
-  })
+  },[])
 
 
   const handleOtpChange = (e) => {
@@ -40,8 +41,16 @@ const OtpVerifyPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-
-      const response = await axios.post(`${apiUrl}/api/verifyotp`, {id:email,otp});
+      console.log("hit howe api",email,otp)
+      const response = await axios.post(
+        `${apiUrl}/api/verifyotp`,
+        { id: email, otp },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
       setMessage(response.data.message);
       setStatus(response.data.status ? 'success' : 'error');
       dispatch(setLoading(false));
@@ -55,7 +64,17 @@ const OtpVerifyPage = () => {
 
   const handleResendOtp = async () => {
     try {
-      await axios.post(`${apiUrl}/api/auth/resend-otp`, { id: email });
+      const resp =await axios.post(
+        `${apiUrl}/api/auth/resend-otp`,
+        { id: email },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      console.log("response",resp)
+
       setMessage('OTP has been resent to your email.');
       setStatus('success');
     } catch (error) {
